@@ -14,4 +14,8 @@ public class ListItem {
 	public void setDescription(String input) {
 		description = input;
 	}
+	
+	public String toString() {
+		return description;
+	}
 }

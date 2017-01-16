@@ -6,27 +6,29 @@ import edu.pitt.todolist.view.View;
 public class Controller {
 	private View view;
 	private Model model;
-	private AddButton addButton;
-	private DeleteButton deleteButton;
+	private AddButton addButton = new AddButton(this);
+	private DeleteButton deleteButton = new DeleteButton(this);
 	
 	public Controller(View v, Model m) {
 		view = v;
 		model = m;
+		view.createView(this);
 	}
 	
-	private View getView() {
+	public View getView() {
 		return view;
 	}
 	
-	private Model getModel() {
+	
+	public Model getModel() {
 		return model;
 	}
 	
-	private AddButton getAddButton() {
+	public AddButton getAddButton() {
 		return addButton;
 	}
 
-	private DeleteButton getDeleteButton() {
+	public DeleteButton getDeleteButton() {
 		return deleteButton;
 	}
 	

@@ -1,4 +1,5 @@
 package edu.pitt.todolist.model;
+
 import java.util.Vector;
 
 public class Model {
@@ -8,15 +9,17 @@ public class Model {
 		todoList = new Vector<ListItem>();
 	}
 	
-	public void addListItem() {
-		
+	public ListItem addListItem(String itemDescription) {
+		ListItem newItem = new ListItem(itemDescription);
+		todoList.add(newItem);
+		return newItem;
 	}
 	
-	public void deleteListItem() {
-		
+	public void deleteListItem(ListItem item) {
+		todoList.remove(item);
 	}
 	
-	public void getList() {
-		
+	public Vector<ListItem> getList() {
+		return todoList;
 	}
 }

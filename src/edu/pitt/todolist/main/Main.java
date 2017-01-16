@@ -1,8 +1,8 @@
 package edu.pitt.todolist.main;
 
-import edu.pitt.todolist.view.View;
-import edu.pitt.todolist.model.Model;
 import edu.pitt.todolist.controller.Controller;
+import edu.pitt.todolist.model.Model;
+import edu.pitt.todolist.view.View;
 
 public class Main {
 
