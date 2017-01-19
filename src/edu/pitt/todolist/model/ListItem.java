@@ -1,12 +1,17 @@
 package edu.pitt.todolist.model;
 
+/**
+ * <h1>ListItem</h1>
+ * This class creates an object for each of the items in the todoList.
+ * @author Noah Scholfield
+ *
+ */
 public class ListItem {
 	private String description;
 
 	/**
 	 * Creates a new ListItem
 	 * @param d  The description of the new ListItem
-	 * @return A new ListItem object
 	 */
 	public ListItem(String d) {
 		description = d;

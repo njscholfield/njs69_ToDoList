@@ -2,12 +2,17 @@ package edu.pitt.todolist.model;
 
 import java.util.Vector;
 
+/**
+ * <h1>Model</h1>
+ * This class handles the storage and editing of the todoList data.
+ * @author Noah Scholfield
+ *
+ */
 public class Model {
 	private Vector<ListItem> todoList;
 
 	/**
 	 * Creates a new model object.
-	 * @return A Model object.
 	 */
 	public Model() {
 		todoList = new Vector<ListItem>();

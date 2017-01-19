@@ -15,19 +15,25 @@ import javax.swing.border.EmptyBorder;
 import edu.pitt.todolist.controller.Controller;
 import edu.pitt.todolist.model.ListItem;
 
+/**
+ * <h1>View</h1>
+ * THis class creates and controls the GUI of the todoList application.
+ * @author Noah Scholfield
+ *
+ */
 public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField input = new JTextField();
 	private JList<ListItem> list;
 	private DefaultListModel<ListItem> listModel;
+	private static final String WINDOW_TITLE = "Todo List";
 
 	/**
 	 * Constructor for View. Creates an empty JFrame called Todo List.
-	 * @return A View object.
 	 */
 	public View() {
-		super("Todo List");
+		super(WINDOW_TITLE);
 	}
 
 	/**
@@ -48,15 +54,14 @@ public class View extends JFrame {
 
 	/**
 	 * Updates the list in the View.
-	 * @param action The operation you want to do. "Add" or "Remove" to/from the todoList.
 	 * @param item  The item to be removed or added to the todoList.
 	 */
-	public void updateList(String action, ListItem item) {
-		if(action == "Add") {
+	public void updateList(ListItem item) {
+		if(listModel.contains(item)) {
+			listModel.removeElement(item);
+		} else {
 			listModel.addElement(item);
 			input.setText("");
-		} else {
-			listModel.removeElement(item);
 		}
 	}
 

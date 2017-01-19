@@ -3,6 +3,12 @@ package edu.pitt.todolist.controller;
 import edu.pitt.todolist.model.Model;
 import edu.pitt.todolist.view.View;
 
+/**
+ * <h1>Controller</h1>
+ * This class provides an interface between the Model and View packages.
+ * @author Noah Scholfield
+ *
+ */
 public class Controller {
 	private View view;
 	private Model model;
@@ -13,7 +19,6 @@ public class Controller {
 	 * Constructor for the Controller. This function calls for the view to be created.
 	 * @param  v The View object.
 	 * @param  m The Model Object.
-	 * @return A Controller object.
 	 */
 	public Controller(View v, Model m) {
 		view = v;
