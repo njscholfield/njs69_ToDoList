@@ -16,27 +16,41 @@ import edu.pitt.todolist.controller.Controller;
 import edu.pitt.todolist.model.ListItem;
 
 public class View extends JFrame {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JTextField input = new JTextField();
-	JList<ListItem> list;
+	private JList<ListItem> list;
 	private DefaultListModel<ListItem> listModel;
-	
+
+	/**
+	 * Constructor for View. Creates an empty JFrame called Todo List.
+	 * @return A View object.
+	 */
 	public View() {
 		super("Todo List");
 	}
-	
+
+	/**
+	 * Returns the value of the text box where the user enters the description of the new item they want to add.
+	 * @return The value in the text box,
+	 */
 	public String getInputValue() {
 		return input.getText();
 	}
-	
+
+	/**
+	 * Returns the item that is selected in the todoList.
+	 * @return The selected item.
+	 */
 	public ListItem getSelectedItem() {
 		return list.getSelectedValue();
 	}
-	
+
+	/**
+	 * Updates the list in the View.
+	 * @param action The operation you want to do. "Add" or "Remove" to/from the todoList.
+	 * @param item  The item to be removed or added to the todoList.
+	 */
 	public void updateList(String action, ListItem item) {
 		if(action == "Add") {
 			listModel.addElement(item);
@@ -45,60 +59,60 @@ public class View extends JFrame {
 			listModel.removeElement(item);
 		}
 	}
-	
+
+	/**
+	 * Adds all of the components to the JFrame created by the Constructor.
+	 * @param ctrl The controller object.
+	 */
 	public void createView(Controller ctrl) {
-		int y = 0;
 		setSize(600, 200);
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		listModel = new DefaultListModel<ListItem>();
 		list = new JList<ListItem>(listModel);
-		
+
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = y;
+		c.gridy = 0;
 		c.gridwidth = 12;
 		c.weightx = 0.9;
 		list.setFixedCellHeight(-1);
 		list.setBorder(new EmptyBorder(10,10,10,10));
 		JScrollPane scrollpane = new JScrollPane(list);
-		//scrollpane.setBorder(new EmptyBorder(10,10,10,10));
 		add(scrollpane, c);
-		
+
 		JButton deleteBtn = new JButton("Delete");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 12;
 		c.gridx = 12;
-		c.gridy = y;
+		c.gridy = 0;
 		c.weightx = 0.1;
 		deleteBtn.addActionListener(ctrl.getDeleteButton());
 		add(deleteBtn, c);
-		
-		y++;
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 11;
 		c.gridx = 0;
-		c.gridy = y;
+		c.gridy = 1;
 		c.weightx = 0.9;
 		add(input, c);
-		
+
 		JButton addBtn = new JButton("Add");
 		c.gridwidth = 1;
 		c.weightx = 0.1;
 		c.gridx = 12;
-		c.gridy = y;
+		c.gridy = 1;
 		addBtn.addActionListener(ctrl.getAddButton());
-		add(addBtn, c); 
-		
+		add(addBtn, c);
+
 		getRootPane().setDefaultButton(addBtn);
-		
+
 		setVisible(true);
 	}
 }

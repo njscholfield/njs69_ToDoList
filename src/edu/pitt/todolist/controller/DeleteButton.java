@@ -7,11 +7,20 @@ import edu.pitt.todolist.model.ListItem;
 
 public class DeleteButton implements ActionListener {
 	private Controller controller;
-	
-	public DeleteButton(Controller c) {
-		controller = c;
+
+	/**
+	 * Constructor for DeleteButton.
+	 * @param ctrl The controller object.
+	 * @return A DeleteButton object.x
+	 */
+	public DeleteButton(Controller ctrl) {
+		controller = ctrl;
 	}
-	
+
+	/**
+	 * Implemented from the ActionListener class. Removes an item to the todoList when the delete button is selected.
+	 * @param event The button click event from the JButton. 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		ListItem toDelete = controller.getView().getSelectedItem();
 		controller.getModel().deleteListItem(toDelete);
