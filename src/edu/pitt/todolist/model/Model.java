@@ -1,5 +1,6 @@
 package edu.pitt.todolist.model;
 
+import java.sql.*;
 import java.util.Vector;
 
 /**
@@ -10,12 +11,28 @@ import java.util.Vector;
  */
 public class Model {
 	private Vector<ListItem> todoList;
+	private Connection connection;
 
 	/**
 	 * Creates a new model object.
 	 */
 	public Model() {
 		todoList = new Vector<ListItem>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connection = DriverManager.getConnection("jdbc:mysql://sis-teach-01.sis.pitt.edu/njs69is1017", "njs69is1017", "njs69@pitt.edu");
+			
+			// this doesn't actually go here
+			String query = "SELECT * FROM todolist ORDER BY id;";
+			Statement statement = connection.createStatement();
+			ResultSet rs =  statement.executeQuery(query);
+			
+			while(rs.next()) {
+				todoList.add(new ListItem(rs.getString("description")));
+			}
+		} catch(Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -25,8 +42,15 @@ public class Model {
 	 */
 	public ListItem addListItem(String itemDescription) {
 		ListItem newItem = new ListItem(itemDescription);
-		todoList.add(newItem);
-		return newItem;
+		String addItem = "INSERT INTO todolist (description) VALUES ('" + newItem.getDescription() + "');";
+		try {
+			connection.createStatement().executeUpdate(addItem);
+			todoList.add(newItem);
+			return newItem;
+		} catch(Throwable e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
 	}
 
 	/**
@@ -34,7 +58,13 @@ public class Model {
 	 * @param item The item to be removed from the todoList.
 	 */
 	public void deleteListItem(ListItem item) {
-		todoList.remove(item);
+		String deleteItem = "DELETE FROM todolist WHERE description = '" + item.getDescription() + "';";
+		try {
+			connection.createStatement().executeUpdate(deleteItem);
+			todoList.remove(item);
+		} catch (Throwable e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**

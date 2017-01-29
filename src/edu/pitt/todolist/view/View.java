@@ -2,6 +2,7 @@ package edu.pitt.todolist.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -57,6 +58,11 @@ public class View extends JFrame {
 	 * @param item  The item to be removed or added to the todoList.
 	 */
 	public void updateList(ListItem item) {
+		if(item == null) {
+			input.setText("");
+			return;
+		}
+		
 		if(listModel.contains(item)) {
 			listModel.removeElement(item);
 		} else {
@@ -78,6 +84,7 @@ public class View extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 
 		listModel = new DefaultListModel<ListItem>();
+		Vector<ListItem> items = ctrl.getModel().getList();
 		list = new JList<ListItem>(listModel);
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -87,8 +94,10 @@ public class View extends JFrame {
 		c.gridy = 0;
 		c.gridwidth = 12;
 		c.weightx = 0.9;
+		list.setVisibleRowCount(6);
 		list.setFixedCellHeight(-1);
 		list.setBorder(new EmptyBorder(10,10,10,10));
+		items.forEach(item -> listModel.addElement(item));
 		JScrollPane scrollpane = new JScrollPane(list);
 		add(scrollpane, c);
 
