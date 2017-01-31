@@ -22,7 +22,6 @@ public class Model {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = DriverManager.getConnection("jdbc:mysql://sis-teach-01.sis.pitt.edu/njs69is1017", "njs69is1017", "njs69@pitt.edu");
 			
-			// this doesn't actually go here
 			String query = "SELECT * FROM todolist ORDER BY id;";
 			Statement statement = connection.createStatement();
 			ResultSet rs =  statement.executeQuery(query);
@@ -41,6 +40,9 @@ public class Model {
 	 * @return The new ListItem object that was added.
 	 */
 	public ListItem addListItem(String itemDescription) {
+		if(itemDescription.equals("")) {
+			return null;
+		}
 		ListItem newItem = new ListItem(itemDescription);
 		String addItem = "INSERT INTO todolist (description) VALUES ('" + newItem.getDescription() + "');";
 		try {
