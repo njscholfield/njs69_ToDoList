@@ -1,6 +1,9 @@
 package edu.pitt.todolist.model;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Vector;
 
 /**
@@ -27,7 +30,7 @@ public class Model {
 			ResultSet rs =  statement.executeQuery(query);
 			
 			while(rs.next()) {
-				todoList.add(new ListItem(rs.getString("description")));
+				todoList.add(new ListItem(rs.getInt("id"), rs.getString("description"), rs.getTimestamp("timestamp")));
 			}
 		} catch(Throwable e) {
 			e.printStackTrace();
@@ -43,7 +46,8 @@ public class Model {
 		if(itemDescription.equals("")) {
 			return null;
 		}
-		ListItem newItem = new ListItem(itemDescription);
+		// the database generates IDs and Timestamps
+		ListItem newItem = new ListItem(-1, itemDescription, null);
 		String addItem = "INSERT INTO todolist (description) VALUES ('" + newItem.getDescription() + "');";
 		try {
 			connection.createStatement().executeUpdate(addItem);

@@ -1,5 +1,7 @@
 package edu.pitt.todolist.model;
 
+import java.sql.Timestamp;
+
 /**
  * <h1>ListItem</h1>
  * This class creates an object for each of the items in the todoList.
@@ -7,14 +9,18 @@ package edu.pitt.todolist.model;
  *
  */
 public class ListItem {
+	private int id;
 	private String description;
-
+	private Timestamp timestamp;
+	
 	/**
 	 * Creates a new ListItem
 	 * @param d  The description of the new ListItem
 	 */
-	public ListItem(String d) {
+	public ListItem(int id, String d, Timestamp time) {
+		this.id = id;
 		description = d;
+		timestamp = time;
 	}
 
 	/** Gives the description of the ListItem.
