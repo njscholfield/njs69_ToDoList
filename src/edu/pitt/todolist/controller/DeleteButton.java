@@ -31,7 +31,7 @@ public class DeleteButton implements ActionListener {
 		ListItem toDelete = controller.getView().getSelectedItem();
 		if(toDelete != null) {
 			controller.getModel().deleteListItem(toDelete);
-			controller.getView().updateList(toDelete);
+			controller.getView().updateList();
 		}
 	}
 

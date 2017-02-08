@@ -22,6 +22,14 @@ public class ListItem {
 		description = d;
 		timestamp = time;
 	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
 
 	/** Gives the description of the ListItem.
 	 * @return The description of the ListItem

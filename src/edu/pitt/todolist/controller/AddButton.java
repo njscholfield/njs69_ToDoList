@@ -3,8 +3,6 @@ package edu.pitt.todolist.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.pitt.todolist.model.ListItem;
-
 
 /**
  * <h1>AddButton</h1>
@@ -28,9 +26,11 @@ public class AddButton implements ActionListener {
 	 * @param event The button click event from the JButton.
 	 */
 	public void actionPerformed(ActionEvent event) {
-		String newItemDescription = controller.getView().getInputValue();
-		ListItem newItem = controller.getModel().addListItem(newItemDescription);
-		controller.getView().updateList(newItem);
+		String newItemDescription = controller.getView().getTaskName();
+		String userFirstName = controller.getView().getFirstName();
+		String userLastName = controller.getView().getLastName();
+		controller.getModel().addListItem(newItemDescription, userFirstName, userLastName);
+		controller.getView().updateList();
 	}
 
 }
