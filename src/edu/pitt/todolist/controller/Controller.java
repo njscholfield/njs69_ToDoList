@@ -12,17 +12,19 @@ import edu.pitt.todolist.view.View;
 public class Controller {
 	private View view;
 	private Model model;
-	private AddButton addButton = new AddButton(this);
-	private DeleteButton deleteButton = new DeleteButton(this);
+	private AddButton addButton;
+	private DeleteButton deleteButton;
 
 	/**
-	 * Constructor for the Controller. This function calls for the view to be created.
+	 * Constructor for the Controller. This function calls for the view to be connected to the controller and displayed.
 	 * @param  v The View object.
 	 * @param  m The Model Object.
 	 */
 	public Controller(View v, Model m) {
 		view = v;
 		model = m;
+		addButton = new AddButton(this);
+		deleteButton = new DeleteButton(this);
 		view.createView(this);
 	}
 

@@ -12,21 +12,31 @@ public class ListItem {
 	private int id;
 	private String description;
 	private Timestamp timestamp;
-	
+
 	/**
 	 * Creates a new ListItem
-	 * @param d  The description of the new ListItem
+	 * @param id  The item id of the new ListItem.
+	 * @param d  The description of the new ListItem.
+	 * @param time  The timestamp of the new ListItem.
 	 */
 	public ListItem(int id, String d, Timestamp time) {
 		this.id = id;
 		description = d;
 		timestamp = time;
 	}
-	
+
+	/**
+	 * Gives the id of the ListItem
+	 * @return The id of the ListItem
+	 */
 	public int getID() {
 		return id;
 	}
-	
+
+	/**
+	 * Gives the timestamp of when the ListItem was created
+	 * @return The timestamp of the ListItem
+	 */
 	public Timestamp getTimestamp() {
 		return timestamp;
 	}
@@ -47,7 +57,7 @@ public class ListItem {
 	}
 
 	/**
-	 * Overrides the generic toString so that the description is shown in the JList.
+	 * Overrides the generic toString so that the description is shown in the JTable.
 	 * @return The description of the ListItem.
 	 */
 	public String toString() {
