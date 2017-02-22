@@ -55,7 +55,7 @@ public class ListItem {
 	public void setDescription(String newDescription) {
 		description = newDescription;
 	}
-
+	
 	/**
 	 * Overrides the generic toString so that the description is shown in the JTable.
 	 * @return The description of the ListItem.

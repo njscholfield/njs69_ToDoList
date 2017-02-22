@@ -3,7 +3,7 @@ package edu.pitt.todolist.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.pitt.todolist.model.ListItem;
+import edu.pitt.todolist.model.ListTreeNode;
 
 
 /**
@@ -28,7 +28,7 @@ public class DeleteButton implements ActionListener {
 	 * @param event The button click event from the JButton. 
 	 */
 	public void actionPerformed(ActionEvent event) {
-		ListItem toDelete = controller.getView().getSelectedItem();
+		ListTreeNode toDelete = controller.getView().getSelectedItem();
 		if(toDelete != null) {
 			controller.getModel().deleteListItem(toDelete);
 			controller.getView().updateList();

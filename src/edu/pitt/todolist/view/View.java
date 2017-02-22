@@ -1,33 +1,32 @@
 package edu.pitt.todolist.view;
 
-import java.util.HashMap;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.border.EtchedBorder;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
 
 import edu.pitt.todolist.controller.Controller;
-import edu.pitt.todolist.model.ListItem;
-import edu.pitt.todolist.model.User;
+import edu.pitt.todolist.model.ListTreeNode;
 
-public class View extends JFrame{
+public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final String WINDOW_TITLE = "Todo List";
 	private Controller controller;
-	private HashMap<ListItem, User> data;
+	private ListTreeNode treeRoot;
 	private JTextField txtTaskName;
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
 	private JButton btnAdd;
 	private JButton btnDelete;
-	private JTable table;
-	private TableDataModel tdModel;
+	private JTree tree;
+	private DefaultTreeModel treeModel;
 
 	public View() {
 		super(WINDOW_TITLE);
@@ -48,11 +47,12 @@ public class View extends JFrame{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(4, 25, 325, 128);
 		panelDisplay.add(scrollPane);
-
-		tdModel = new TableDataModel();
-
-		table = new JTable(tdModel);
-		scrollPane.setViewportView(table);
+		
+		tree = new JTree();
+		
+		tree.setModel(treeModel);
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		scrollPane.setViewportView(tree);
 
 		JLabel lblTasks = new JLabel("Tasks");
 		lblTasks.setBounds(6, 6, 61, 16);
@@ -111,8 +111,9 @@ public class View extends JFrame{
 		controller = ctrl;
 		btnAdd.addActionListener(ctrl.getAddButton());
 		btnDelete.addActionListener(ctrl.getDeleteButton());
-		data = ctrl.getModel().getList();
-		tdModel.updateData(data);
+		treeRoot = ctrl.getModel().getList();
+		treeModel = new DefaultTreeModel(treeRoot);
+		tree.setModel(treeModel);
 
 		setVisible(true);
 	}
@@ -145,16 +146,16 @@ public class View extends JFrame{
 	 * Returns the item that is selected in the todoList.
 	 * @return The selected item.
 	 */
-	public ListItem getSelectedItem() {
-		return (ListItem)tdModel.getValueAt(table.getSelectedRow(), 0);
+	public ListTreeNode getSelectedItem() {
+		return (ListTreeNode)tree.getLastSelectedPathComponent();
 	}
-
+	
 	/**
 	 * Updates the data being displayed.
 	 */
 	public void updateList() {
-		data = controller.getModel().getList();
-		tdModel.updateData(data);
+		treeRoot = controller.getModel().getList();
+		treeModel.reload(); // not sure about this...
 		clearTextBoxes();
 	}
 
