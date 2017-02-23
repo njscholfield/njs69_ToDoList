@@ -59,7 +59,7 @@ public class Model {
 	}
 
 	/**
-	 * Gets the todoList Items from the database and stores puts them into a HashMap with the user each is assigned to.
+	 * Gets the todoList Items, their owners, and the relationships between the items from the database and stores that in a Tree.
 	 */
 	private void fetchItemsFromDatabase() {
 		try {
@@ -72,11 +72,11 @@ public class Model {
 			ResultSet rs2 = statement.executeQuery(query2);
 			HashMap<Integer, Integer> treeRelationship = new HashMap<Integer, Integer>();
 			root = new ListTreeNode("ToDo List");
-			
+
 			while(rs2.next()) {
 				treeRelationship.put(new Integer(rs2.getInt("child_id")), new Integer(rs2.getInt("parent_id")));
 			}
-			
+
 			ResultSet rs =  statement.executeQuery(query);
 
 			while(rs.next()) {
@@ -107,6 +107,7 @@ public class Model {
 	 * @param itemDescription The description of the new item.
 	 * @param firstName       The first name of the person the item is assigned to.
 	 * @param lastName        The last name of the person the item is assigned to.
+	 * @param selectedItem		The item selected in the UI which should become the parent of the new ListTreeNode.
 	 */
 	public void addListItem(String itemDescription, String firstName, String lastName, ListTreeNode selectedItem) {
 		if(itemDescription.equals("") || firstName.equals("") || lastName.equals("")) {
@@ -123,9 +124,9 @@ public class Model {
 			User user = getOrCreateUser(firstName, lastName);
 			String createConnection = "INSERT INTO user_todo (user_id, todo_id) VALUES (" + user.getID() + ", " + newItem.getID() + ");";
 			statement.executeUpdate(createConnection);
-			
+
 			if(selectedItem != null && selectedItem != root) {
-				String treeRelationship = "INSERT INTO todo_tree (parent_id, child_id) " + 
+				String treeRelationship = "INSERT INTO todo_tree (parent_id, child_id) " +
 						"VALUES (" + selectedItem.getItem().getID() + ", " + newItem.getID() + ");";
 				statement.executeUpdate(treeRelationship);
 				selectedItem.add(new ListTreeNode(newItem, user));
@@ -200,27 +201,27 @@ public class Model {
 		int itemID = item.getItem().getID();
 		String deleteItem = "DELETE FROM todolist WHERE description = '" + item.getItem().getDescription() + "';";
 		String removePairing = "DELETE FROM user_todo WHERE todo_id = " + itemID + ";";
-		String removeTreeRelationship = "DELETE FROM todo_tree WHERE child_id = " + 
+		String removeTreeRelationship = "DELETE FROM todo_tree WHERE child_id = " +
 				itemID + " OR parent_id = " + itemID + ";";
 		try {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(deleteItem);
 			statement.executeUpdate(removePairing);
 			ListTreeNode parent = item.getParent();
-			
+
 			if(parent == null) {
 				parent = root;
 			}
-			
+
 			if(!item.isLeaf()) {
 				Enumeration<ListTreeNode> children = item.children();
-				
+
 				while(children.hasMoreElements()) {
 					deleteListItem(children.nextElement());
 					children = item.children();
 				}
 			}
-			
+
 			parent.remove(item);
 			statement.executeUpdate(removeTreeRelationship);
 		} catch (SQLException e) {
@@ -229,8 +230,8 @@ public class Model {
 	}
 
 	/**
-	 * Returns the todoList.
-	 * @return The todoList HashMap.
+	 * Returns the todoList tree.
+	 * @return The root of the tree.
 	 */
 	public ListTreeNode getList() {
 		return root;

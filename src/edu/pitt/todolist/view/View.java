@@ -47,9 +47,9 @@ public class View extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(4, 25, 325, 128);
 		panelDisplay.add(scrollPane);
-		
+
 		tree = new JTree();
-		
+
 		tree.setModel(treeModel);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		scrollPane.setViewportView(tree);
@@ -149,13 +149,13 @@ public class View extends JFrame {
 	public ListTreeNode getSelectedItem() {
 		return (ListTreeNode)tree.getLastSelectedPathComponent();
 	}
-	
+
 	/**
 	 * Updates the data being displayed.
 	 */
 	public void updateList() {
 		treeRoot = controller.getModel().getList();
-		treeModel.reload(); // not sure about this...
+		treeModel.reload();
 		clearTextBoxes();
 	}
 
